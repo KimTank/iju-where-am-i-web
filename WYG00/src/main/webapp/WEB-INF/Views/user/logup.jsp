@@ -99,6 +99,7 @@ p {
 		<h3>
 			<button style="background-color: black">확인</button>
 			<Button style="background-color: black" onclick="history.back()">취소</Button>
+			
 		</h3>
 	</div>
 

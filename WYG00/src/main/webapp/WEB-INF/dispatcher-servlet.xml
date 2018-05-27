@@ -16,4 +16,9 @@
 	<mvc:view-resolvers>
 		<mvc:jsp prefix="/WEB-INF/Views/" />
 	</mvc:view-resolvers>
+	<!-- 직통으로 가는 값을 정합니다 -->
+	<mvc:view-controller path="/t1main" view-name="main"/>
+	<mvc:view-controller path="/t1logup" view-name="/user/logup"/>
+	<mvc:view-controller path="/t1signup" view-name="/user/signup"/>
+	<mvc:view-controller path="/t1login" view-name="/user/login"/>
 </beans> 

@@ -3,5 +3,20 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Mapper">
-
+	<!-- 데이터베이스에 id는 프라이머리키 넣음 -->
+	<!-- 로그인 세션을 가져오기 위해서 id를 셀렉함 -->
+	<select id="login" resultType="Pack01.UserInfor">
+		SELECT userId FROM member WHERE userId=#{userId} AND
+		userPassword=#{userPassword}
+	</select>
+	<!-- 중복체크를 위해서 AJAX를 사용한 함수 -->
+	<select id="checkId" resultType="int">
+		SELECT COUNT(*) FROM member WHERE userId=#{userId}
+	</select>
+	<!-- 회원가입 -->
+	<insert id="signup" parameterType="Pack01.UserInfor">
+		INSERT INTO member VALUES(#{userId}, #{userPassword}, #{userGender},
+		#{userName}, #{userBirth}, #{userCell}, #{userEmail})
+	</insert>
+	
 </mapper>
