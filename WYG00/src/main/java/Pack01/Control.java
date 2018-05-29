@@ -27,7 +27,7 @@ public class Control {
 	public String loginAct(HttpServletRequest request, @RequestParam(value = "id") String id,
 			@RequestParam(value = "pass") String pass, Model model) {
 		// 확인용
-		System.out.println(id + " " + pass);
+		System.out.println("로그인"+id + " " + pass);
 		try {
 			System.out.println(Class.forName("oracle.jdbc.driver.OracleDriver"));
 		} catch (Exception e) {
@@ -89,14 +89,42 @@ public class Control {
 			@RequestParam(value = "birth") String birth, @RequestParam(value = "cell") String cell,
 			@RequestParam(value = "email") String email) {
 		// 확인용
-		System.out.println(id + " " + pass + " " + gender + " " + name + " " + birth + " " + cell + " " + email);
+		System.out.println("회원가입"+id + " " + pass + " " + gender + " " + name + " " + birth + " " + cell + " " + email);
 		try {
-			System.out.println(Class.forName("oracle.jdbc.driver.OracleDriver"));
+			System.out.println(Class.forName("회원가입 oracle.jdbc.driver.OracleDriver"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		//
 		dao.signup(new UserInfor(id, pass, gender, name, birth, cell, email));
 		return "/user/login";
+	}
+	
+	//회원정보 불러오기
+	@RequestMapping("/t1update")
+	public String logupAct(@RequestParam(value = "id") String id, Model model) {
+		// 확인용
+		System.out.println(id+"회원정보아이디");
+		// 값대입
+		UserInfor info = dao.logup(new UserInfor(id));//세션에 저장된 id값을 불러와서 넣음
+		model.addAttribute("userInfor", info);
+		//System.out.println(info.getUserId()+"확인용11");
+		// -----------------------
+		return "/user/logup";
+	}
+	//회원정보수정처리
+	@RequestMapping("/t2update")
+	public String updateAct(
+			@RequestParam(value = "id") String id,
+			@RequestParam(value = "pass") String pass,
+			@RequestParam(value = "name") String name,
+			@RequestParam(value = "birth") String birth,
+			@RequestParam(value = "cell") String cell,
+			@RequestParam(value = "email") String email) {
+		// 확인용
+		System.out.println(id + " " + pass + " "+ name + " " + birth + " " + cell + " " + email);
+		//
+		dao.update(new UserInfor(id, pass, name, birth, cell, email));
+		return "main";
 	}
 }

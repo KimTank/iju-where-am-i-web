@@ -10,13 +10,14 @@
 <head>
 <!-- jquery사용하기위한 구문 -->
 <script src="//code.jquery.com/jquery-3.3.1.js"></script>
-<!-- 유효성검사를 위한 플러그인 -->
-<script type="text/javascript" src="js/plugins/validation/jquery.validate.min.js"></script>
-<!-- 유효성검사 오류시 나타내줄 빨간경고문구 표시 -->
-<!-- 	<style type="text/css">
-        #iform label.error { margin-left: 10px; color:red; }
-    </style>	 --> 
+
 <script type="text/javascript">
+//reset버튼 누를시 가입버튼 죽이기
+$(document).ready(function(){
+	 $("#ibtn2").click(function(){
+    	$("#ibtn1").attr("disabled",true);
+	 });
+ });
 //아이디중복부분체크
 function checkId() {
 	var inputed = document.getElementById("iid").value;
@@ -31,12 +32,12 @@ function checkId() {
 		},
 		url : "checkId.jy",
 		success : function(data) {
-			if((data.idCheck==1||inputed=="")) {
+			if((data.idCheck==1||inputed=="")||inputed.length<6||inputed.length>11) {
 				id.style.backgroundColor="#aa4444"; 
 				$btn = $('#ibtn1').attr('disabled', true);
 			} else {
 				id.style.backgroundColor="#44aa44";
-				nullCheck();//필수값안들어갔을때 버튼제어
+				nullCheck();
 			}
 		},
 		error : function(data) {//실패하면 error
@@ -44,7 +45,7 @@ function checkId() {
 		}
 	});
 }
-
+//비밀번호제어
 function nullCheck() {
 	var pass = document.getElementById("ipass");
 	var passR = document.getElementById("ipassR");
@@ -52,21 +53,25 @@ function nullCheck() {
 	var passRInput = document.getElementById("ipassR").value;
 	var btn = document.getElementById("ibtn1");
 	if((passInput==passRInput&&passInput==""&&passRInput=="")||passInput!=passRInput) {
-		nameCheck();
 		pass.style.backgroundColor="#aa4444";
 		passR.style.backgroundColor="#aa4444";
-	} else if(passInput==passRInput) {
+		$btn = $('#ibtn1').attr('disabled', true);		
+	} else if(passInput==passRInput&&(passInput.length>9&&passInput.length<21)) {
 		nameCheck();
 		pass.style.backgroundColor="#44aa44";
 		passR.style.backgroundColor="#44aa44";
+	} else {
+		pass.style.backgroundColor="#aa4444";
+		passR.style.backgroundColor="#aa4444";
+		$btn = $('#ibtn1').attr('disabled', true);
 	}
 }
-//이름빈칸일때제어
+//이름제어
 function nameCheck() {
 	var nameInput = document.getElementById("iname").value;
 	var name = document.getElementById("iname");
 	var btn = document.getElementById("ibtn1");
-	if(nameInput=="") {
+	if(nameInput==""||(nameInput.length<2||nameInput.length>5)) {
 		$btn = $('#ibtn1').attr('disabled', true);
 		name.style.backgroundColor="aa4444";
 	} else {
@@ -74,65 +79,31 @@ function nameCheck() {
 		name.style.backgroundColor="44aa44";
 	}
 }
+//---------------------------입력값을 막아서 제어----------------------------
+$(document).ready(function(){
+	//숫자만 입력하게 만들자
+	$("#icell").keyup(function(event){
+		if (!(event.keyCode >=37 && event.keyCode<=40)) {
+			var inputVal = $(this).val();
+			$(this).val(inputVal.replace(/[^0-9]/gi,''));
+		}
+	});
+	//영문과 숫자만 입력가능하게
+	$("#iid").keyup(function(event){
+		if (!(event.keyCode >=37 && event.keyCode<=40)) {
+			var inputVal = $(this).val();
+			$(this).val(inputVal.replace(/[^a-z0-9]/gi,''));
+		}
+	});
+	//한글만 입력가능하도록
+	$("#iname").keyup(function(event){
+		if (!(event.keyCode >=37 && event.keyCode<=40)) {
+			var inputVal = $(this).val();
+			$(this).val(inputVal.replace(/[a-z0-9~!@\#$%^&*\()\-=+_']/gi,''));
+		}
+	});
 
-//---------------------submit버튼 클릭할때 잘못된값 있을 시 alert띄우기-------------------------------
-        /* $(document).ready(function () {          
-        //기본형태
-        $('#iform').validate(); //유효성 검사를 적용
-       
-        //validate signup form on keyup and submit
-        //확장옵션
-        $('#iform').validate({
-            rules: {
-                iid:{required:true, minlength:5, maxlength:10},
-                ipass: {required:true, minlength:5, maxlength:20,}
-                ipassR: {required:true, minlength:5, maxlength:20, equalTo:'#ipass'},               
-                iname: {required:true, minlength:2, maxlength:5,},
-                iemail: {required:true, email:true},
-                icell: {required:true, digits:true, minlength:10, maxlength:11,}
-            },
-            messages: {
-                iid: {
-                     required:"아이디를 입력하시오.",
-                     minlength: jQuery.format("아이디는 {0}자 이상 입력해주세요!"),
-                     maxlength: jQuery.format("아이디는 {0}자 이하 입력해주세요!")
-                },
-                ipass: {
-                    required:"암호를 입력하시오.",
-                    minlength: jQuery.format("암호는 {0}자 이상 입력해주세요!"),
-                    maxlength: jQuery.format("암호는 {0}자 이하 입력해주세요!")
-               },
-                ipassR: {
-                    required: "암호확인를 입력하시오.",
-                    minlength: jQuery.format("암호는 {0}자 이상 입력해주세요!"),
-                    maxlength: jQuery.format("암호는 {0}자 이하 입력해주세요!")
-                    equalTo:"암호를 다시 확인하세요"
-                },
-                iname: {
-                	required:"이름을 입력하시오."
-              		minlength: jQuery.format("암호는 {0}자 이상 입력해주세요!"),
-					maxlength: jQuery.format("암호는 {0}자 이하 입력해주세요!")
-                },
-                iemail: {
-                    required:"이메일을 입력하시오.",
-                    email:"올바른 이메일을 입력하시오."
-                },
-                icell: {
-                	required: "전화번호를 입력하시오.",
-                	digits: "숫자만 입력하시오.",
-                    minlength: jQuery.format("암호는 {0}자 이상 입력해주세요!"),
-                    maxlength: jQuery.format("암호는 {0}자 이하 입력해주세요!")
-                }
-            },
-            submitHandler: function (frm){
-                frm.submit();   //유효성 검사를 통과시 전송
-            },
-            success: function(e){
-                //
-            }
-           
-        });
-      }); */ //end ready()
+});
 </script>
 <!--  -->
 <meta charset="utf-8" />
@@ -277,7 +248,7 @@ a {
 								<tr>
 									<!-- 아이디 첫째줄 00 -->
 									<td style="width: 47%;">
-									 <font color=white>아이디(필수)</font> 
+									 <font color=white>아이디(필수) 영어와 숫자 6~10자리</font> 
 										<div class="input-group form-group-no-border input-lg">
 											<span class="input-group-addon"> <i
 												class="now-ui-icons business_badge"></i>
@@ -289,7 +260,7 @@ a {
 									<td style="width: 6%;"></td>
 									<!-- 비밀번호 두번째줄 10-->
 									<td style="width: 47%;">
-									<font color=white>비밀번호(필수)</font> 
+									<font color=white>비밀번호(필수) 10자리에서 20자리</font> 
 										<div class="input-group form-group-no-border input-lg">
 											<span class="input-group-addon"> <i
 												class="now-ui-icons travel_info"></i>
@@ -301,7 +272,7 @@ a {
 								<tr>
 									<!-- 비밀번호 확인 12-->
 									<td style="width: 47%;">
-									<font color=white>비밀번호 확인(필수)</font> 
+									<font color=white>비밀번호 확인(필수) 비밀번호와 동일하지 않을 시 버튼 활성화 안됨</font> 
 										<div class="input-group form-group-no-border input-lg">
 											<span class="input-group-addon"> <i
 												class="now-ui-icons travel_info"></i>
@@ -313,15 +284,15 @@ a {
 									<td style="width: 6%;"></td>
 									<!-- 성별구분 -->
 									<td style="width: 47%;">
-										<font color=white>성별(선택)</font>
+										<font color=white>성별(필수)</font>
 										<div class="form-group" id="igender"
 											style="text-align: center;">
 											<div class="btn-group" data-toggle="buttons">
 												<label class="btn btn-primary active"> <input
 													type="radio" name="gender" autocomplete="off" value="남자"
-													checked onclick="checkId()">남자
+													checked>남자
 												</label> <label class="btn btn-primary"> <input type="radio"
-													name="gender" autocomplete="off" value="여자" checked onclick="checkId()">여자
+													name="gender" autocomplete="off" value="여자" checked>여자
 												</label>
 											</div>
 										</div>
@@ -330,7 +301,7 @@ a {
 								<tr>
 									<!-- 이름 -->
 									<td style="width: 47%;">
-										<font color=white>이름(필수)</font> 
+										<font color=white>이름(필수) 한글로 2자 ~ 5자</font> 
 										<div class="input-group form-group-no-border input-lg">
 											<span class="input-group-addon"> <i
 												class="now-ui-icons users_circle-08"></i>
@@ -345,8 +316,8 @@ a {
 										<font color=white>생년월일(선택)</font> 
 										<div class="form-group">
 											<input
-												type="text" name="birth" style="color: white;"
-												class="form-control date-picker" value="01/01/1920"
+												type="date" name="birth" style="color: white;"
+												class="form-control" value="01/01/1920"
 												 data-datepicker-color="primary">
 										</div>
 									</td>
@@ -382,9 +353,9 @@ a {
 								<!-- 가입버튼 -->
 								<td style="width: 47%">
 									<div class="footer text-center">
-										<button onclick="inputCheck()" type="submit" disabled="true"
+										<input type="submit" disabled="true"
 											class="btn btn-primary btn-round btn-lg btn-block" name="btn" 
-											id="ibtn1" >회원가입</button>
+											id="ibtn1" value="회원가입">
 									</div>						
 								</td>
 								<!-- 중간 -->

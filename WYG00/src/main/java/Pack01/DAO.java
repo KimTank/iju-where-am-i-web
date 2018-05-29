@@ -48,11 +48,35 @@ class Dao {
 		} finally { session.close(); }
 	}
 	
+	//Ajax로 아이디중복확인
 	public int idCheck(UserInfor ui) {
 		session = sf.openSession();
 		try {
 			List<Integer> result = session.selectList("checkId", ui);
 			return result.get(0);
+		} finally { session.close(); }
+	}
+	
+	//회원정보수정 진입시 아이디값 넘기자
+	public UserInfor logup(UserInfor ui) {
+		session = sf.openSession();
+		try {
+			List<UserInfor> result = session.selectList("logup",ui);
+			for (UserInfor info : result) {
+				return info;
+			}
+		} finally { session.close(); }
+		 return null;
+	}
+	
+	//회원정보수정
+	public void update(UserInfor ui) {
+		session = sf.openSession();
+		try {
+			int result = session.update("update", ui);
+			if(result>0){
+				session.commit();
+			}
 		} finally { session.close(); }
 	}
 }

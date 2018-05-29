@@ -53,6 +53,7 @@ a {
 
 <body class="index-page sidebar-collapse">
 <%String id = (String)session.getAttribute("login"); //세션넘긴것을 얻어와서 제어하기위해 생성%>
+<!-- 히든값으로 아이디를 넘겨보자 -->
 	<!-- Navbar -->
 	<nav
 		class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent "
@@ -93,7 +94,7 @@ a {
 				id="navigation" data-nav-image="./assets/img/blurred-image-1.jpg">
 				<ul class="navbar-nav">
 					<% if(id!=null){ %>
-					<li class="nav-item"><a class="nav-link" href="t1update">
+					<li class="nav-item"><a class="nav-link" href="t1update?id=<%=id%>">
 							<i class="now-ui-icons loader_gear"></i>
 							<p class="a">회원정보수정</p>
 					</a></li>
@@ -131,7 +132,7 @@ a {
 					<%
 					} else {
 					%>
-					<h1>"<%=id %>"님의 접속을 환영합니다 :D</h1>
+					<h1>"<%=id%>"님의 접속을 환영합니다 :D</h1>
 					<%
 					}
 					%>

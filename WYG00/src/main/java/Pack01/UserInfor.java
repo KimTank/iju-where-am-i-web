@@ -11,11 +11,25 @@ public class UserInfor {
 	
 	public UserInfor() {}//이거없어서 오류떳음 추후 알아봐야됨 디폴트생성자가 왜 자동으로 작동안했는지에대해
 	
+	public UserInfor(String userId, String userPassword, String userName, String userBirth, String userCell,
+			String userEmail) {
+		this.userId = userId;
+		this.userPassword = userPassword;
+		this.userName = userName;
+		this.userBirth = userBirth;
+		this.userCell = userCell;
+		this.userEmail = userEmail;
+	}
+	//로그인시
 	public UserInfor(String userId, String userPassword) {
 		this.userId = userId;
 		this.userPassword = userPassword;
 	}
-
+	//회원정보수정 진입시
+	public UserInfor(String userId) {
+		this.userId = userId;
+	}
+	//회원가입
 	public UserInfor(String userId, String userPassword, String userGender, String userName, String userBirth,
 			String userCell, String userEmail) {
 		this.userId = userId;

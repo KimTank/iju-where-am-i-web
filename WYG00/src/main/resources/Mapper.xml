@@ -18,5 +18,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO member VALUES(#{userId}, #{userPassword}, #{userGender},
 		#{userName}, #{userBirth}, #{userCell}, #{userEmail})
 	</insert>
+	<!-- 정보수정 아이디값 넘기기 -->
+	<select id="logup" resultType="Pack01.UserInfor">
+		SELECT * FROM member WHERE userId=#{userId}
+	</select>
+	<!-- 회원정보수정 -->
+	<update id="update" parameterType="Pack01.UserInfor">
+		UPDATE member
+		SET userPassword=#{userPassword}, userName=#{userName},
+		userBirth=#{userBirth}, userCell=#{userCell}, userEmail=#{userEmail}
+		WHERE userId=#{userId}
+	</update>
 	
 </mapper>
