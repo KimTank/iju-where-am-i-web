@@ -22,6 +22,7 @@
 <link rel="stylesheet"
 	href="//cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
 <style>
+body{ padding-top: 70px; }
 @import
 	url('//cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css')
 	;
@@ -53,11 +54,23 @@ a {
 
 <body class="index-page sidebar-collapse">
 <%String id = (String)session.getAttribute("login"); //세션넘긴것을 얻어와서 제어하기위해 생성%>
+		<%
+	 	String strReferer = request.getHeader("referer");
+	 	if(strReferer == null){
+	%>
+		 <script language="javascript">
+		  alert("URL 주소창에 주소를 직접 입력해서 접근하셨습니다.\n\n정상적인 경로를 통해 다시 접근해 주십시오.");
+		  document.location.href="t1main";
+		 </script>
+	<%
+	  	return;
+	 	}
+	%>
 <!-- 히든값으로 아이디를 넘겨보자 -->
 	<!-- Navbar -->
 	<nav
-		class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent "
-		color-on-scroll="400">
+		class="navbar navbar-expand-lg bg-primary fixed-top navbar-nontransparent "
+		color-on-scroll="400" style="background-color: orage">
 		<div class="container">
 			<div class="navbar-translate">
 				<table style="width: 580px">
@@ -75,7 +88,7 @@ a {
 						<td><a  style="width: 100px"class="navbar-brand; b;" href="t1indoor"
 							>Indoor</a></td>
 						<td style="width: 70px"></td>
-						<td><a  style="width: 100px"class="navbar-brand; b;" href="index.jsp"
+						<td><a  style="width: 100px"class="navbar-brand; b;" href="t1bbs"
 							rel="tooltip" data-placement="bottom">문의</a></td>
 						<%}else{} %>
 					</tr>
@@ -120,8 +133,13 @@ a {
 	<div class="wrapper">
 		<div class="page-header clear-filter" filter-color="orange">
 		<!-- 배경그림 -->
+		<%if(id==null){ %>
 			<div class="page-header-image" data-parallax="true"
 				style="background-image: url('./assets/img/kkk1.jpg');"></div>
+				<%} else {%>
+				<div class="page-header-image" data-parallax="true"
+				style="background-image: url('./assets/img/loginS.jpg');"></div>
+				<%} %>
 			<div class="container">
 				<div class="content-center brand">
 					<%
@@ -140,7 +158,7 @@ a {
 			</div>
 		</div>
 		<!-- 마지막  -->
-		        <footer class="footer">
+		        <footer class="footer" style="background-color: orange">
             <div class="container">
                 <div class="copyright" style="color: white;">
                     &copy;

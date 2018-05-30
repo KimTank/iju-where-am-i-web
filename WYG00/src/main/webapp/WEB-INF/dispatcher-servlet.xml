@@ -20,4 +20,10 @@
 	<mvc:view-controller path="/t1main" view-name="main"/>
 	<mvc:view-controller path="/t1signup" view-name="/user/signup"/>
 	<mvc:view-controller path="/t1login" view-name="/user/login"/>
+	<mvc:view-controller path="/t1bbs" view-name="/bbs/bbs"/>
+	<mvc:view-controller path="/t2view" view-name="/bbs/view"/>
+	<mvc:view-controller path="/t2write" view-name="/bbs/write"/>
+	<mvc:view-controller path="/t2writeAction" view-name="/bbs/writeAction"/>
+	<mvc:view-controller path="/t2update" view-name="/bbs/update"/>
+	<mvc:view-controller path="/t2deleteAction" view-name="/bbs/deleteAction"/>
 </beans> 

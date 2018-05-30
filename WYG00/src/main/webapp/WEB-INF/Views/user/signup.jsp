@@ -119,6 +119,7 @@ $(document).ready(function(){
 <link rel="stylesheet"
 	href="//cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
 <style>
+body{ padding-top: 70px; }
 @import
 	url('//cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css')
 	;
@@ -152,9 +153,21 @@ a {
 	<%
 		String id = (String) session.getAttribute("login"); //세션넘긴것을 얻어와서 제어하기위해 생성
 	%>
+			<%
+	 	String strReferer = request.getHeader("referer");
+	 	if(strReferer == null){
+	%>
+		 <script language="javascript">
+		  alert("URL 주소창에 주소를 직접 입력해서 접근하셨습니다.\n\n정상적인 경로를 통해 다시 접근해 주십시오.");
+		  document.location.href="t1main";
+		 </script>
+	<%
+	  	return;
+	 	}
+	%>
 	<!-- Navbar -->
 	<nav
-		class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent "
+		class="navbar navbar-expand-lg bg-primary fixed-top navbar-nontransparent "
 		color-on-scroll="400">
 		<div class="container">
 			<div class="navbar-translate">
@@ -174,7 +187,7 @@ a {
 							href="t1indoor">Indoor</a></td>
 						<td style="width: 70px"></td>
 						<td><a style="width: 100px" class="navbar-brand; b;"
-							href="index.jsp" rel="tooltip" data-placement="bottom">문의</a></td>
+							href="t1bbs" rel="tooltip" data-placement="bottom">문의</a></td>
 						<%
 							} else {
 							}
@@ -373,18 +386,18 @@ a {
 			</div>
 		</div>
 		<!-- 마지막  -->
-		<footer class="footer">
-			<div class="container">
-				<div class="copyright">
-					&copy;
-					<script>
-						document.write(new Date().getFullYear())
-					</script>
-					, Designed by <a href="#">정우령</a>. Coded by <a href="#">김창일</a>, <a
-						href="#">김태윤</a>.
-				</div>
-			</div>
-		</footer>
+		        <footer class="footer" style="background-color: orange">
+            <div class="container">
+                <div class="copyright" style="color: white;">
+                    &copy;
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script>, Designed by
+                    <a href="#" style="color: white;">정우령</a>. Coded by
+                    <a href="#" style="color: white;">김창일 김태윤</a>.
+                </div>
+            </div>
+        </footer>
 	</div>
 </body>
 <!--   Core JS Files   -->
