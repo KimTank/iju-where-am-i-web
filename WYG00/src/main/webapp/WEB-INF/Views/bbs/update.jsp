@@ -141,7 +141,42 @@ a {
 	<!-- End Navbar -->
 	<div style="background-image: url('./assets/img/bbs.jpg'); background-size: cover; background-position: top center; min-height: 700px;">
 		<!-- 게시판부분 -->
-		<form method="post" action="t2updateAction">
+		<!-- 업데이트 자바코드 -->
+		<%
+		//세션
+		String userId = null;
+		if (session.getAttribute("login") != null) {
+			userId = (String) session.getAttribute("login");
+		}
+		//업데이트
+		if (userId == null) {
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('로그인을 하세요.')");
+			script.println("location.href = 't1login'");
+			script.println("</script>");
+		}
+		int bbsId = 0;
+		if (request.getParameter("bbsId") != null) {
+			bbsId = Integer.parseInt(request.getParameter("bbsId"));
+		}
+		if (bbsId == 0) {
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('유효하지 않는 글입니다.')");
+			script.println("location.href = 't1bbs'");
+			script.println("</script>");
+		}
+		Bbs bbs = new BbsDAO().getBbs(bbsId);//해당글의 구체적인 내용을 가져올 수 있도록 한다
+		if (!userId.equals(bbs.getUserId())) {
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('작성자만 수정할 수 있습니다.')");
+			script.println("location.href = 't1bbs'");
+			script.println("</script>");
+		}
+	%>
+		<form method="post" action="t2updateAction?bbsId=<%=bbsId%>">
 			<div class="container">
 				<div class="row">
 					<div data-background-color="orange" style="width: 1000px;">
@@ -154,12 +189,12 @@ a {
 							<tbody>
 								<tr>
 									<td>
-										<input class="form-control" type="text" name="bbsTitle" maxlength="50">
+										<input class="form-control" type="text" name="bbsTitle" maxlength="50" value="<%=bbs.getBbsTitle()%>">
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<textarea class="form-control" type="text" name="bbsContent" maxlength="8192" style="height: 500px"></textarea>
+										<textarea class="form-control" type="text" name="bbsContent" maxlength="8192" style="height: 500px"><%=bbs.getBbsContent()%></textarea>
 									</td>
 								</tr>
 							</tbody>
