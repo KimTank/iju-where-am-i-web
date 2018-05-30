@@ -16,8 +16,8 @@
 	<%
 		//세션처리
 		String userId = (String) session.getAttribute("login"); //세션넘긴것을 얻어와서 제어하기위해 생성
-		if (session.getAttribute("userId") != null) {
-			userId = (String) session.getAttribute("userId");
+		if (session.getAttribute("login") != null) {
+			userId = (String) session.getAttribute("login");
 		}
 		if (userId == null) {
 			PrintWriter script = response.getWriter();

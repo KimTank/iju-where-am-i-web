@@ -24,6 +24,5 @@
 	<mvc:view-controller path="/t2view" view-name="/bbs/view"/>
 	<mvc:view-controller path="/t2write" view-name="/bbs/write"/>
 	<mvc:view-controller path="/t2writeAction" view-name="/bbs/writeAction"/>
-	<mvc:view-controller path="/t2update" view-name="/bbs/update"/>
 	<mvc:view-controller path="/t2deleteAction" view-name="/bbs/deleteAction"/>
 </beans> 

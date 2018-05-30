@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" sizes="76x76" href=".assets/img/apple-icon.png">
 <link rel="icon" type="image/png" href="./assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>글 내용 보기</title>
+<title>글수정</title>
 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 <!--     Fonts and icons     -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
@@ -139,80 +139,51 @@ a {
 		</div>
 	</nav>
 	<!-- End Navbar -->
-	<div class="page-header" filter-color="orange">
-		<div class="page-header-image" style="background-image: url('./assets/img/bbs.jpg');"></div>
+	<div style="background-image: url('./assets/img/bbs.jpg'); background-size: cover; background-position: top center; min-height: 700px;">
 		<!-- 게시판부분 -->
-		<!-- 게시판 java -->
-		<%
-			int bbsId = 0;
-			if (request.getParameter("bbsId") != null) {
-				bbsId = Integer.parseInt(request.getParameter("bbsId"));
-			}
-			if (bbsId == 0) {
-				PrintWriter script = response.getWriter();
-				script.println("<script>");
-				script.println("alert('유효하지 않는 글입니다.')");
-				script.println("location.href = 't1main'");
-				script.println("</script>");
-			}
-			Bbs bbs = new BbsDAO().getBbs(bbsId);//해당글의 구체적인 내용을 가져올 수 있도록 한다
-		%>
-		<div class="container">
-			<div class="row">
-				<table class="table table-striped" style="text-align: center; border: 1px solid #F5A9D0">
-					<thead>
-						<tr>
-							<th colspan="3" style="background-color: #F8E0EC; text-align: center;">글 확인하기</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td style="width: 20%;">제목</td>
-							<td colspan="2"><%=bbs.getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
-					.replaceAll("\n", "</br>")%></td>
-						</tr>
-						<tr>
-							<td>작성자</td>
-							<td colspan="2"><%=bbs.getUserId()%></td>
-						</tr>
-						<tr>
-							<td>작성일자</td>
-							<td colspan="2"><%=bbs.getBbsDate().substring(0, 4) + "년 " + bbs.getBbsDate().substring(5, 7) + "월 "
-					+ bbs.getBbsDate().substring(8, 10) + "일 " + bbs.getBbsDate().substring(11, 13) + ":"
-					+ bbs.getBbsDate().substring(14, 16) + ":" + bbs.getBbsDate().substring(17, 19)%></td>
-						</tr>
-						<tr>
-							<td>내용</td>
-							<!-- 특수문자 기입가능하게 함 -->
-							<td colspan="2" style="min-heght: 200px; text-align: left;"><%=bbs.getBbsContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
-					.replaceAll("\n", "</br>")%></td>
-						</tr>
-					</tbody>
-				</table>
-				<a href="t1bbs" class="btn btn-primary">목록</a>
-				<%
-					if (id != null && id.equals(bbs.getUserId())) {
-				%>
-				<a href="t2update?bbsId=<%=bbsId%>" class="btn btn-primary">수정</a>
-				<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="t2deleteAction?bbsId=<%=bbsId%>" class="btn btn-primary">삭제</a>
-				<%
-					}
-				%>
-			</div>
-		</div>
-		<div class="col-lg-4"></div>
-		<!-- 마지막  -->
-		<footer class="footer" style="background-color: orange">
+		<form method="post" action="t2updateAction">
 			<div class="container">
-				<div class="copyright" style="color: white;">
-					&copy;
-					<script>
-						document.write(new Date().getFullYear())
-					</script>
-					, Designed by <a href="#" style="color: white;">정우령</a>. Coded by <a href="#" style="color: white;">김창일 김태윤</a>.
+				<div class="row">
+					<div data-background-color="orange" style="width: 1000px;">
+						<table class="table table-striped" style="text-align: center; border: 1px solid #F5A9D0">
+							<thead>
+								<tr>
+									<th style="background-color: #F8E0EC; text-align: center;">글수정</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<input class="form-control" type="text" name="bbsTitle" maxlength="50">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<textarea class="form-control" type="text" name="bbsContent" maxlength="8192" style="height: 500px"></textarea>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<a href="t1bbs" class="btn btn-primary">목록</a> <input type="submit" class="btn btn-primary pull-right" value="수정하기">
+					</div>
 				</div>
 			</div>
-		</footer>
+		</form>
+	</div>
+	<div class="col-lg-4"></div>
+	</form>
+	<!-- 마지막  -->
+	<footer class="footer" style="background-color: orange">
+		<div class="container">
+			<div class="copyright" style="color: white;">
+				&copy;
+				<script>
+					document.write(new Date().getFullYear())
+				</script>
+				, Designed by <a href="#" style="color: white;">정우령</a>. Coded by <a href="#" style="color: white;">김창일 김태윤</a>.
+			</div>
+		</div>
+	</footer>
 	</div>
 </body>
 <!--   Core JS Files   -->
