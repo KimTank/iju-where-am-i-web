@@ -27,4 +27,5 @@
 	<mvc:view-controller path="/t2bbsupdate" view-name="/bbs/update"/>
 	<mvc:view-controller path="/t2updateAction" view-name="/bbs/updateAction"/>
 	<mvc:view-controller path="/t2deleteAction" view-name="/bbs/deleteAction"/>
+	<mvc:view-controller path="/t1indoor" view-name="indoor"/>
 </beans> 

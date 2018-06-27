@@ -23,8 +23,9 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
 <style>
 body {
-	padding-top: 90px;
+	padding-top: 80px;
 }
+
 td {
 	color: white;
 }
@@ -86,7 +87,7 @@ a {
 				<table style="width: 580px">
 					<tr style="width: 580px">
 						<td style="width: 70px">
-							<a class="navbar-brand; b;" href="index.jsp"><img class="n-logo" src="./assets/img/now-logo.png" alt=""></a>
+							<a class="navbar-brand; b;" href="index.jsp"><img class="n-logo" src="./assets/img/radar.png" alt=""></a>
 						</td>
 						<td style="width: 70px"></td>
 						<td>
@@ -116,24 +117,21 @@ a {
 			</div>
 			<div class="collapse navbar-collapse justify-content-end" id="navigation" data-nav-image="./assets/img/blurred-image-1.jpg">
 				<ul class="navbar-nav">
-					<%
-						if (id != null) {
-					%>
+					<% if(id!=null){ %>
+					<li class="nav-item"><a class="nav-link" href="t1update?id=<%=id%>"> <i class="now-ui-icons loader_gear"></i>
+							<p class="a">회원정보수정</p>
+					</a></li>
 					<li class="nav-item"><a class="nav-link" href="t1logout"> <i class="now-ui-icons sport_user-run"></i>
 							<p class="a">로그아웃</p>
 					</a></li>
-					<%
-						} else {
-					%>
+					<%}else{%>
 					<li class="nav-item"><a class="nav-link" href="t1signup"> <i class="now-ui-icons files_box"></i>
 							<p class="a">회원가입</p>
 					</a></li>
 					<li class="nav-item"><a class="nav-link" href="t1login"> <i class="now-ui-icons files_paper"></i>
 							<p class="a">로그인</p>
 					</a></li>
-					<%
-						}
-					%>
+					<%} %>
 
 				</ul>
 			</div>
@@ -151,9 +149,9 @@ a {
 					pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 				}
 		%>
-		<div class="container">
+		<div class="container" style="padding-top: 30px;">
 			<div class="row">
-				<table class="table table-striped" style="text-align: center; border: 1px solid #F5A9D0">
+				<table class="table table-striped" style="text-align: center; border: 1px solid #F5A9D0;">
 					<thead>
 						<tr>
 							<th style="background-color: #F8E0EC; text-align: center;">번호</th>
@@ -165,7 +163,7 @@ a {
 					<tbody>
 
 						<tr>
-						<%	
+							<%	
 							BbsDAO bbsDAO = new BbsDAO();
 							ArrayList<Bbs> list = bbsDAO.getList(pageNumber);
 							for (int i = 0; i < list.size(); i++) {
@@ -208,11 +206,10 @@ a {
 		<footer class="footer" style="background-color: orange">
 			<div class="container">
 				<div class="copyright" style="color: white;">
-					&copy;
 					<script>
 						document.write(new Date().getFullYear())
 					</script>
-					, Designed by <a href="#" style="color: white;">정우령</a>. Coded by <a href="#" style="color: white;">김창일 김태윤</a>.
+					, 미래지향형 실내 측위 시스템<a href="#" style="color: white;">지금어디GO</a>
 				</div>
 			</div>
 		</footer>
